@@ -11,8 +11,7 @@ public class Account {
 	public Account() {
 	}
 
-	public Account(Integer number, String holder, Double balance, Double withDrawLimit) 
-			throws DomainException {
+	public Account(Integer number, String holder, Double balance, Double withDrawLimit){
 		this.number = number;
 		this.holder = holder;
 		this.balance = balance;
@@ -48,13 +47,16 @@ public class Account {
 	}
 	
 	public void withDraw(double amount) throws DomainException {
-		if (balance < amount) {
-			throw new DomainException("O saldo da conta é inferior ao valor para saque");
-		}
+		vallidate(amount);
+		balance -= amount;
+	}
+	// função que valida a exceção -       propagar a exceção
+	private void vallidate(double amount) throws DomainException {
 		if (withDrawLimit < amount) {
 			throw new DomainException ("Valor superior ao limite de saque!");
 		}
-		balance -= amount;
+		if (balance < amount) {
+			throw new DomainException("O saldo da conta é inferior ao valor para saque");
+		}
 	}
-
 }

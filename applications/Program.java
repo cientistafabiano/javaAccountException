@@ -1,5 +1,6 @@
 package applications;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -10,14 +11,15 @@ public class Program {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);		
 		
 		try {
 			System.out.println("Entre com os dados da conta: ");
 			System.out.print("Number: ");
 			int number = sc.nextInt();
 			System.out.print("Holder: ");
-			String holder = sc.next();
+			sc.nextLine();
+			String holder = sc.nextLine();
 			System.out.print("Valor inicial da conta: ");
 			double balance = sc.nextDouble();
 			System.out.print("Saque limite: ");
@@ -25,11 +27,15 @@ public class Program {
 			System.out.print("Entre com a quantia(amount) para saque: ");
 			double amount = sc.nextDouble();
 			Account conta = new Account(number,holder,balance,withDrawLimit);
+		
 			conta.withDraw(amount);
 			System.out.print("New balance: " + conta.getBalance());
 		}
 		catch (DomainException e) {
 			System.out.println(e.getMessage());
+		}
+		catch (InputMismatchException e) {
+			System.out.print("Entre com números");
 		}
 		sc.close();
 	}
